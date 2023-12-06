@@ -6,11 +6,9 @@ import {
 } from "@thirdweb-dev/react";
 import React, { useState } from "react";
 import Container from "../components/Container/Container";
-import NFTGrid from "../components/NFT/NFTGrid";
 import { NFT_COLLECTION_ADDRESS } from "../const/contractAddresses";
 import tokenPageStyles from "../styles/Token.module.css";
 import { NFT as NFTType } from "@thirdweb-dev/sdk";
-import SaleInfo from "../components/SaleInfo/SaleInfo";
 
 export default function Sell() {
   // Load all of the NFTs from the NFT Collection
@@ -26,7 +24,7 @@ export default function Sell() {
       {!selectedNft ? (
         <>
           <p>Select which NFT you&rsquo;d like to sell below.</p>
-          <NFTGrid
+          {/* <NFTGrid
             data={data}
             isLoading={isLoading}
             overrideOnclickBehavior={(nft) => {
@@ -35,7 +33,7 @@ export default function Sell() {
             emptyText={
               "Looks like you don't own any NFTs in this collection. Head to the buy page to buy some!"
             }
-          />
+          /> */}
         </>
       ) : (
         <div className={tokenPageStyles.container} style={{ marginTop: 0 }}>
@@ -64,10 +62,6 @@ export default function Sell() {
             <p className={tokenPageStyles.collectionName}>
               Token ID #{selectedNft.metadata.id}
             </p>
-
-            <div className={tokenPageStyles.pricingContainer}>
-              <SaleInfo nft={selectedNft} />
-            </div>
           </div>
         </div>
       )}

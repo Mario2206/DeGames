@@ -47,7 +47,7 @@ export default function NFTComponent({ nft }: Props) {
 	return (
 		<>
 			<img
-				src={nft.metadata.image}
+				src={nft.metadata.image || ""}
 				className={styles.nftImage}
 				style={{ height: "200px" }}
 			/>
