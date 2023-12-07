@@ -753,20 +753,24 @@ export async function hasGame(tokenId: number) {
 export async function getAllMintableNfts() {
 	const { contract } = getContract();
 	const events = await contract.queryFilter("RegisterGame");
-	const nfts = events.map<NftGame>((event) => ({
-		name: "NFT Game",
-		id: event.args?.gameId.toNumber() ?? 0,
-		description: "NFT Game",
-		image: "https://placekitten.com/200/300",
-		price: ethers.utils.formatEther(event.args?.price ?? 0),
-		contract: NFT_COLLECTION_ADDRESS,
-		metadata: {
-			name: "NFT Game",
-			description: "NFT Game",
-			image: "https://placekitten.com/200/300",
+	const nfts = await Promise.all(events.map<Promise<NftGame>>(async (event) => {
+		const metadataUri = await contract.uri(event.args?.gameId.toNumber() ?? 0);
+		const metadata = await fetch(metadataUri).then((res) => res.json()).catch(() => null);
+		return {
+			name: metadata?.name || "NFT Game",
 			id: event.args?.gameId.toNumber() ?? 0,
-			uri: "",
-		},
+			description: metadata?.description || "NFT Game",
+			image: metadata?.image || "https://placekitten.com/200/300",
+			price: ethers.utils.formatEther(event.args?.price ?? 0),
+			contract: NFT_COLLECTION_ADDRESS,
+			metadata: {
+				name: metadata?.name || "NFT Game",
+				description: metadata?.description || "NFT Game",
+				image: metadata?.image || "https://placekitten.com/200/300",
+				id: event.args?.gameId.toNumber() ?? 0,
+				uri: "",
+			},
+		};
 	}));
 	return nfts;
 }

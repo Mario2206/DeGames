@@ -6,7 +6,7 @@ import { Localhost, Sepolia } from "@thirdweb-dev/chains";
 
 const LocalhostNetwork = { ...Localhost, chainId: 31337 };
 
-export const NETWORK = Sepolia;
+export const NETWORK = Sepolia;  
 
 // 3. The address of your NFT collection smart contract.
-export const NFT_COLLECTION_ADDRESS = "0x6859ECC14D2C50aA99e214a75650e6AE44D3e844";
+export const NFT_COLLECTION_ADDRESS = "0xb9ffdD97d2D90Bf47496531280C3293Aa8731a69";
